@@ -93,9 +93,8 @@ public class Main {
                 .flatMap(customer -> customer.getOrders().stream())
                 .flatMap(order -> order.getProducts().stream())
                 .filter(product -> product.getCategory().equals("Books"))
-                .filter(product -> product.getPrice().compareTo(new BigDecimal(100)) > 0)
+                .filter(product -> product.getPrice().compareTo(BigDecimal.valueOf(100)) > 0) // добавлен метод valueOf()
                 .collect(Collectors.toList());
-
         // Задание 2 (Получите список заказов с продуктами из категории "Children's products")
         List<Order> ChildrenProductsOrderList = customers.stream()
                 .flatMap(customer -> customer.getOrders().stream())
@@ -116,8 +115,8 @@ public class Main {
                 .filter(customer -> customer.getLevel() == 2L).flatMap(customer -> customer.getOrders().stream() // Получаем заказы каждого клиента
                         .filter(order -> {
                             LocalDate orderDate = order.getOrderDate(); // Получаем дату заказа
-                            return orderDate.isAfter(LocalDate.of(2021, 1, 31)) // Заказ после 31 января 2021
-                                    && orderDate.isBefore(LocalDate.of(2021, 4, 2)); // Заказ до 2 апреля 2021
+                            return orderDate.isAfter(LocalDate.of(2021, 2, 1)) // Заказ после 1 февраля 2021 (исправлено)
+                                    && orderDate.isBefore(LocalDate.of(2021, 4, 1)); // Заказ до 1 апреля 2021 (исправлено)
                         })
                         .flatMap(order -> order.getProducts().stream())) // Извлекаем продукты из отфильтрованных заказов
                 .collect(Collectors.toList()); // Собираем все продукты в список
