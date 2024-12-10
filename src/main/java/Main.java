@@ -93,8 +93,9 @@ public class Main {
                 .flatMap(customer -> customer.getOrders().stream())
                 .flatMap(order -> order.getProducts().stream())
                 .filter(product -> product.getCategory().equals("Books"))
-                .filter(product -> product.getPrice().compareTo(BigDecimal.valueOf(100)) > 0) // добавлен метод valueOf()
+                .filter(product -> product.getPrice().intValue() > 100) //исправлено, BigDecimal перобразован в int
                 .collect(Collectors.toList());
+
         // Задание 2 (Получите список заказов с продуктами из категории "Children's products")
         List<Order> ChildrenProductsOrderList = customers.stream()
                 .flatMap(customer -> customer.getOrders().stream())
